@@ -8,6 +8,7 @@ import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
+// 사용자가 커스텀마이징하는 것
 @Component
 @Slf4j
 public class CustomFilter extends AbstractGatewayFilterFactory<CustomFilter.Config> {
@@ -25,13 +26,13 @@ public class CustomFilter extends AbstractGatewayFilterFactory<CustomFilter.Conf
             log.info("Custom PRE filter: request id -> {}", request.getId());
 
             // Custom Post Filter
-            return chain.filter(exchange).then(Mono.fromRunnable(() -> {    // Mono : 단일값전달
+            return chain.filter(exchange).then(Mono.fromRunnable(() -> {    // Mono : 단일값전달 vs webFlux
                 log.info("Custom POST filter: response code -> {}", response.getStatusCode());
             }));
         });
     }
 
     public static class Config {
-
+        // configuration 정보는 여기에
     }
 }
