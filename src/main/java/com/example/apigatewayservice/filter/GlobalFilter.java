@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 @Component
 @Slf4j
 public class GlobalFilter extends AbstractGatewayFilterFactory<GlobalFilter.Config> {
-    public GlobalFilter(){
+    public GlobalFilter() {
         super(Config.class);
     }
 
@@ -25,13 +25,13 @@ public class GlobalFilter extends AbstractGatewayFilterFactory<GlobalFilter.Conf
 
             log.info("GlobalFilter baseMessage: {}", config.getBaseMessage());
 
-            if(config.isPreLogger()){
+            if (config.isPreLogger()) {
                 log.info("Global Filter Start: request id -> {}", request.getId());
             }
 
             // Custom Post Filter
             return chain.filter(exchange).then(Mono.fromRunnable(() -> {    // Mono : 단일값전달
-                if(config.isPostLogger()){
+                if (config.isPostLogger()) {
                     log.info("Global Filter End: request code -> {}", response.getStatusCode());
                 }
             }));
@@ -39,7 +39,7 @@ public class GlobalFilter extends AbstractGatewayFilterFactory<GlobalFilter.Conf
     }
 
     @Data
-    public static class Config{
+    public static class Config {
         private String baseMessage;
         private boolean preLogger;
         private boolean postLogger;
